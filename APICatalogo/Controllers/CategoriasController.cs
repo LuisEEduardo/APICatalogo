@@ -3,13 +3,17 @@ using APICatalogo.Models;
 using APICatalogo.Pagination;
 using APICatalogo.Repository;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
 namespace APICatalogo.Controllers
 {
-    [Route("[controller]")]
-    [ApiController]
+    [Route("api/[controller]")]
+    [ApiController]    
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    // [Authorize(AuthenticationSchemes = "Bearer")] 
     public class CategoriasController : ControllerBase
     {
         private readonly IUnitOfWork _uof;
