@@ -1,4 +1,5 @@
 ﻿using APICatalogo.DTOs;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -24,6 +25,7 @@ namespace APICatalogo.Controllers
         }
 
         [HttpGet]
+        [EnableCors("PermitirApiRequest")]
         public ActionResult<string> Get()
             => $"AutorizaController :: Acessado em : {DateTime.Now.ToLongDateString()}";
 

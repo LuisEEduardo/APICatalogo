@@ -5,7 +5,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -14,6 +13,15 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirApiRequest", 
+        builder => 
+        builder.WithOrigins("https://www.apirequest.io/")
+                    .WithMethods("GET")
+        );
+});
+
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
@@ -98,6 +106,11 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+//app.UseCors(opt => opt.
+//    WithOrigins("https://www.apirequest.io/")
+//    .WithMethods("GET"));
+app.UseCors();
 
 app.MapControllers();
 
